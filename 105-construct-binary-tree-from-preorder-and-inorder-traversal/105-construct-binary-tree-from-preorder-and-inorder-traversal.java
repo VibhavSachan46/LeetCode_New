@@ -14,29 +14,29 @@
  * }
  */
 class Solution {
-    int preIndex=0;
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        TreeNode ans = solve(inorder , preorder , 0 , inorder.length-1);
+        HashMap<Integer,Integer> map = new HashMap<Integer,Integer>();
+        for(int i=0;i<inorder.length ;i++)
+        {
+            map.put(inorder[i] ,i);
+        }
+        
+        TreeNode ans = solve(preorder ,0, preorder.length-1 ,inorder , 0 , inorder.length-1 , map );
         return ans;
     }
     
-    public TreeNode solve(int inorder[], int preorder[],int inorderStart , int inorderEnd)
+    public TreeNode solve(int preorder[] , int preStart ,int preEnd ,int inorder[],int inStart , int                                inEnd , Map<Integer,Integer> map)
     {
-        if(inorderStart>inorderEnd)
+        if(inStart>inEnd || preStart>preEnd)
         {
             return null;
         }
-        TreeNode root = new TreeNode(preorder[preIndex++]);
-        int position = inorderStart;
-        for(int i=inorderStart;i<=inorderEnd;i++)
-        {
-            if(inorder[i]==root.val){
-                position = i;
-                break;
-            }
-        }
-        root.left= solve(inorder , preorder , inorderStart , position-1);
-        root.right = solve(inorder , preorder , position+1 , inorderEnd);
+        TreeNode root = new TreeNode(preorder[preStart]);
+        int inroot = map.get(root.val);
+        int numsleft = inroot-inStart;
+        
+        root.left= solve(preorder , preStart+1, preStart+numsleft, inorder ,inStart ,inroot-1, map);
+        root.right = solve(preorder , preStart+numsleft+1, preEnd, inorder ,inroot+1, inEnd, map);
         
         return root;
     }
