@@ -20,7 +20,6 @@ class Solution {
         {
             return al;
         }
-        
         Queue<TreeNode> q = new LinkedList<TreeNode>();
         q.add(root);
         boolean flag = false;
@@ -28,7 +27,6 @@ class Solution {
         {
             int count = q.size();
             LinkedList<Integer> sub = new LinkedList<>();
-            
             for(int i=0 ;i<count ;i++)
             {
                 TreeNode cur= q.poll();
