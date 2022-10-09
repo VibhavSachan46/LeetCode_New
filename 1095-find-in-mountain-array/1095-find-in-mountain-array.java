@@ -8,16 +8,28 @@
  */
  
 class Solution {
+//     public int findInMountainArray(int target, MountainArray mountainArr) {
+        
+//         int peak = findpeak(mountainArr);
+//         int first = find(mountainArr , target , 0 , peak);
+//         if(first != -1)
+//         {
+//             return first;
+//         }
+        
+//         return find(mountainArr , target , peak+1 , mountainArr.length()-1);
+//     }
+    
     public int findInMountainArray(int target, MountainArray mountainArr) {
         
         int peak = findpeak(mountainArr);
-        int first = find(mountainArr , target , 0 , peak);
-        if(first != -1)
-        {
-            return first;
+        int leftHalf = find(mountainArr,target ,0, peak);
+        if(leftHalf!=-1){
+            return leftHalf;
+        }else{
+            return find(mountainArr,target, peak+1, mountainArr.length()-1);
         }
         
-        return find(mountainArr , target , peak+1 , mountainArr.length()-1);
     }
     
     public int findpeak(MountainArray mountainArr){
