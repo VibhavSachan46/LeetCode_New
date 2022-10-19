@@ -1,17 +1,18 @@
 class Solution {
     public int specialArray(int[] nums) {
-        for(int i=1 ;i<=nums.length;i++)
-        {
-            int c=0;
-            for(int j=0;j<nums.length;j++)
-            {
-                if(nums[j] >= i)
-                    c++;
-                
-            }
-            if(i == c)
-                return i;
+        int numOfElements = nums.length;
+        int[] counts = new int[numOfElements+1];
+        for(int elem : nums) {
+            if(elem >= numOfElements) { counts[numOfElements]++; }
+            else { counts[elem]++; }
         }
+        
+        int res = 0;
+        for(int i = counts.length-1; i > 0; i--) {
+            res += counts[i];
+            if(res == i) { return i; } // res: (number of elements in nums that are >= x)  == i: (x)
+        }
+        
         return -1;
     }
 }
