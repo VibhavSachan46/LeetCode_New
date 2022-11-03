@@ -41,18 +41,13 @@ class Solution
     {
         // Code here
         int[] color = new int[V];
+        for(int i=0;i<V;i++) color[i] = -1;
         
-        for(int i=0 ;i<V ;i++)
-        {
-            color[i] = -1;
-        }
-        
-        
-        for(int i=0 ;i<V ;i++)
+        for(int i=0;i<V;i++)
         {
             if(color[i] == -1)
             {
-                if(check(i,V,adj,color) == false)
+                if(dfs(i,0,color,adj)==false)
                 {
                     return false;
                 }
@@ -61,29 +56,25 @@ class Solution
         return true;
     }
     
-    public boolean check(int start ,int V, ArrayList<ArrayList<Integer>>adj , int[] color)
+    public boolean dfs(int node , int col , int[] color ,ArrayList<ArrayList<Integer>>adj)
     {
-        Queue<Integer> q = new LinkedList<Integer>();
-        q.add(start);
-        color[start] = 0;
+        color[node] = col;
         
-        while(!q.isEmpty())
+        for(int it : adj.get(node))
         {
-            int node = q.peek();
-            q.remove();
-            for(int it: adj.get(node))
+            if(color[it] == -1)
             {
-                if(color[it] == -1)
-                {
-                    color[it] = 1-color[node];
-                    q.add(it);
-                }
-                else if(color[it] == color[node])
+                if(dfs(it,1-col,color,adj)==false)
                 {
                     return false;
                 }
             }
+            else if(color[it] == col)
+            {
+                return false;
+            }
         }
+        
         return true;
     }
 }
